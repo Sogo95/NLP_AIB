@@ -21,34 +21,17 @@ import os
        # st.error("Le fichier CSV n'a pas été trouvé. Assurez-vous que le chemin d'accès est correct.")
 
 
+
+
+# Charger les données à partir du fichier CSV
 @st.cache_data
 def load_data():
-    try:
-        # Chemin relatif du fichier CSV
-        csv_path = os.path.join(os.path.dirname(__file__), 'articles.csv')
-
-        # Afficher le chemin absolu pour débogage
-        abs_path = os.path.abspath(csv_path)
-        st.write(f"Chemin absolu du fichier CSV : {abs_path}")
-
-        # Vérifier si le fichier existe avant de le charger
-        if os.path.exists(csv_path):
-            data = pd.read_csv(csv_path)
-            st.success("Fichier CSV chargé avec succès.")
-            return data
-        else:
-            st.error("Le fichier CSV n'a pas été trouvé. Assurez-vous que le chemin d'accès est correct.")
-            return None
-    except FileNotFoundError:
-        st.error("Le fichier CSV n'a pas été trouvé. Assurez-vous que le chemin d'accès est correct.")
+    csv_path = os.path.join(os.path.dirname(__file__), 'articles.csv')
+    if os.path.exists(csv_path):
+        data = pd.read_csv(csv_path)
+        return data
+    else:
         return None
-
-# Charger les données
-data = load_data()
-
-if data is not None:
-    st.write(data.head())
-
 
 # Modélisation de sujets avec LDA
 @st.cache_data
